@@ -5,8 +5,26 @@
   --text-dark: #222;
   --text-light: #666;
   --bg-light: #f5f5f5;
+  --bg-white: #fff;
   --border-radius: 8px;
   --transition: all 0.3s ease;
+  --shadow-light: 0 2px 10px rgba(0,0,0,0.08);
+  --shadow-medium: 0 5px 20px rgba(0,0,0,0.12);
+  --shadow-hover: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* Dark Mode Variables */
+body.dark-mode {
+  --primary-color: #ff8c42;
+  --secondary-color: #0066b3;
+  --success-color: #4caf50;
+  --text-dark: #e0e0e0;
+  --text-light: #a0a0a0;
+  --bg-light: #1e1e1e;
+  --bg-white: #2d2d2d;
+  --shadow-light: 0 2px 10px rgba(0,0,0,0.3);
+  --shadow-medium: 0 5px 20px rgba(0,0,0,0.4);
+  --shadow-hover: 0 10px 25px rgba(0,0,0,0.5);
 }
 
 * {
@@ -19,7 +37,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   line-height: 1.6;
   color: var(--text-dark);
-  background-color: #fff;
+  background-color: var(--bg-white);
+  transition: var(--transition);
 }
 
 .container {
@@ -36,7 +55,11 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-light);
+}
+
+body.dark-mode .navbar {
+  background: linear-gradient(135deg, #003d7a 0%, #001f40 100%);
 }
 
 .navbar-content {
@@ -46,6 +69,12 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .logo {
@@ -70,6 +99,37 @@ body {
   color: var(--primary-color);
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.theme-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:active .theme-icon {
+  transform: rotate(20deg);
+}
+
 /* Hero Section */
 .hero {
   background: linear-gradient(135deg, var(--secondary-color) 0%, #0a3d62 100%);
@@ -77,6 +137,11 @@ body {
   padding: 100px 20px;
   text-align: center;
   margin-bottom: 60px;
+  transition: var(--transition);
+}
+
+body.dark-mode .hero {
+  background: linear-gradient(135deg, #003d7a 0%, #001f40 100%);
 }
 
 .hero-content h2 {
@@ -119,6 +184,7 @@ section h2 {
   margin-bottom: 40px;
   text-align: center;
   color: var(--secondary-color);
+  transition: var(--transition);
 }
 
 /* Forms */
@@ -138,6 +204,7 @@ section h2 {
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--secondary-color);
+  transition: var(--transition);
 }
 
 .form-group input,
@@ -149,6 +216,14 @@ section h2 {
   font-size: 1rem;
   font-family: inherit;
   transition: var(--transition);
+  background: var(--bg-white);
+  color: var(--text-dark);
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+  border-color: #444;
 }
 
 .form-group input:focus,
@@ -185,26 +260,28 @@ section h2 {
 /* Assessment Section */
 .assessment {
   background: var(--bg-light);
+  transition: var(--transition);
 }
 
 /* Cards */
 .card {
-  background: white;
+  background: var(--bg-white);
   border-radius: var(--border-radius);
   padding: 30px;
   margin-bottom: 30px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-light);
   transition: var(--transition);
 }
 
 .card:hover {
-  box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-medium);
 }
 
 .card h3 {
   color: var(--secondary-color);
   margin-bottom: 20px;
   font-size: 1.5rem;
+  transition: var(--transition);
 }
 
 /* Workout Grid */
@@ -215,22 +292,23 @@ section h2 {
 }
 
 .workout-card {
-  background: white;
+  background: var(--bg-white);
   border-radius: var(--border-radius);
   padding: 25px;
   border-left: 4px solid var(--primary-color);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-light);
   transition: var(--transition);
 }
 
 .workout-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-hover);
 }
 
 .workout-card h4 {
   color: var(--secondary-color);
   margin-bottom: 10px;
+  transition: var(--transition);
 }
 
 .workout-card .meta {
@@ -273,6 +351,11 @@ section h2 {
   padding: 25px;
   border-radius: var(--border-radius);
   margin-top: 20px;
+  transition: var(--transition);
+}
+
+body.dark-mode .macro-results {
+  background: linear-gradient(135deg, #003d7a, #001f40);
 }
 
 .macro-results p {
@@ -302,15 +385,18 @@ section h2 {
   margin-bottom: 12px;
   border-radius: var(--border-radius);
   border-left: 3px solid var(--success-color);
+  transition: var(--transition);
 }
 
 .tips-list strong {
   color: var(--secondary-color);
+  transition: var(--transition);
 }
 
 /* Progress Section */
 .progress {
   background: var(--bg-light);
+  transition: var(--transition);
 }
 
 .progress-content {
@@ -325,7 +411,7 @@ section h2 {
 }
 
 .progress-item {
-  background: white;
+  background: var(--bg-white);
   padding: 15px;
   margin-bottom: 12px;
   border-radius: var(--border-radius);
@@ -333,6 +419,7 @@ section h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: var(--transition);
 }
 
 .progress-item-date {
@@ -347,7 +434,7 @@ section h2 {
 }
 
 .chart {
-  background: white;
+  background: var(--bg-white);
   padding: 20px;
   border-radius: var(--border-radius);
   min-height: 300px;
@@ -355,20 +442,23 @@ section h2 {
   align-items: center;
   justify-content: center;
   color: var(--text-light);
+  transition: var(--transition);
 }
 
 /* Results */
 .results {
-  background: white;
+  background: var(--bg-white);
   padding: 30px;
   border-radius: var(--border-radius);
   margin-top: 30px;
   border-left: 4px solid var(--success-color);
+  transition: var(--transition);
 }
 
 .results h3 {
   color: var(--secondary-color);
   margin-bottom: 20px;
+  transition: var(--transition);
 }
 
 .hidden {
@@ -382,6 +472,11 @@ section h2 {
   padding: 30px 20px;
   text-align: center;
   margin-top: 60px;
+  transition: var(--transition);
+}
+
+body.dark-mode .footer {
+  background: #003d7a;
 }
 
 .footer p {
@@ -394,6 +489,10 @@ section h2 {
   .nav-links {
     gap: 1rem;
     font-size: 0.95rem;
+  }
+
+  .nav-controls {
+    gap: 1rem;
   }
 
   .hero-content h2 {
@@ -424,7 +523,14 @@ section h2 {
     gap: 1rem;
   }
 
+  .nav-controls {
+    width: 100%;
+    flex-direction: column;
+  }
+
   .nav-links {
+    width: 100%;
+    flex-direction: column;
     gap: 0.5rem;
     font-size: 0.85rem;
   }

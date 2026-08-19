@@ -1,5 +1,37 @@
 // Fitness Advisor App - JavaScript
 
+// Dark Mode Management
+const DARK_MODE_KEY = 'fitadvisor-dark-mode';
+
+function initializeDarkMode() {
+  // Check localStorage for saved preference
+  const savedMode = localStorage.getItem(DARK_MODE_KEY);
+  
+  // Check system preference if no saved preference
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  // Use saved preference, otherwise use system preference
+  const shouldBeDark = savedMode !== null ? JSON.parse(savedMode) : prefersDark;
+  
+  if (shouldBeDark) {
+    document.body.classList.add('dark-mode');
+    updateThemeToggleIcon(true);
+  }
+}
+
+function toggleDarkMode() {
+  const isDarkMode = document.body.classList.toggle('dark-mode');
+  localStorage.setItem(DARK_MODE_KEY, JSON.stringify(isDarkMode));
+  updateThemeToggleIcon(isDarkMode);
+}
+
+function updateThemeToggleIcon(isDarkMode) {
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.querySelector('.theme-icon').textContent = isDarkMode ? '☀️' : '🌙';
+  }
+}
+
 // Sample workout data
 const workoutPlans = {
   beginner_muscle_2: {
@@ -92,6 +124,7 @@ const workoutPlans = {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+  initializeDarkMode();
   setupEventListeners();
   loadProgressData();
   displayWorkoutOptions();
@@ -101,6 +134,7 @@ function setupEventListeners() {
   document.getElementById('assessmentForm').addEventListener('submit', handleAssessment);
   document.getElementById('progressForm').addEventListener('submit', handleProgressEntry);
   document.getElementById('progressDate').valueAsDate = new Date();
+  document.getElementById('themeToggle').addEventListener('click', toggleDarkMode);
 }
 
 function handleAssessment(e) {
@@ -147,29 +181,29 @@ function displayAssessmentResults(age, experience, goal, frequency, plan, injuri
   resultsDiv.innerHTML = `
     <h3>Your Personalized Fitness Plan ✅</h3>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: 30px;">
-      <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+      <div style="background: var(--bg-light); padding: 15px; border-radius: 8px; color: var(--text-dark);">
         <strong>Age:</strong> ${age}
       </div>
-      <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+      <div style="background: var(--bg-light); padding: 15px; border-radius: 8px; color: var(--text-dark);">
         <strong>Level:</strong> ${capitalize(experience)}
       </div>
-      <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+      <div style="background: var(--bg-light); padding: 15px; border-radius: 8px; color: var(--text-dark);">
         <strong>Goal:</strong> ${formatGoal(goal)}
       </div>
-      <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+      <div style="background: var(--bg-light); padding: 15px; border-radius: 8px; color: var(--text-dark);">
         <strong>Frequency:</strong> ${frequency} days/week
       </div>
     </div>
 
-    <h4 style="color: #004e89; margin-bottom: 15px;">${plan.name}</h4>
-    <div style="background: linear-gradient(135deg, #004e89, #0a3d62); color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+    <h4 style="color: var(--secondary-color); margin-bottom: 15px;">${plan.name}</h4>
+    <div style="background: linear-gradient(135deg, var(--secondary-color), #0a3d62); color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
       <p><strong>Duration per session:</strong> ${plan.duration}</p>
       <p><strong>Difficulty:</strong> ${plan.difficulty}</p>
       <p style="margin-top: 15px; font-size: 0.95rem;">${plan.description}</p>
     </div>
 
-    <h4 style="color: #004e89; margin-bottom: 15px;">Exercises:</h4>
-    <ul style="margin-left: 20px; line-height: 1.8;">
+    <h4 style="color: var(--secondary-color); margin-bottom: 15px;">Exercises:</h4>
+    <ul style="margin-left: 20px; line-height: 1.8; color: var(--text-dark);">
       ${plan.exercises.map(ex => `<li>${ex}</li>`).join('')}
     </ul>
 
@@ -298,7 +332,7 @@ function loadProgressData() {
   const listDiv = document.getElementById('progressList');
 
   if (progressData.length === 0) {
-    listDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 30px;">No progress entries yet. Start logging your measurements!</p>';
+    listDiv.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 30px;">No progress entries yet. Start logging your measurements!</p>';
     return;
   }
 
@@ -313,7 +347,7 @@ function loadProgressData() {
         <div class="progress-item">
           <div>
             <div class="progress-item-date">${new Date(entry.date).toLocaleDateString()}</div>
-            <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+            <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">
               ${entry.waist ? `Waist: ${entry.waist}" | ` : ''}
               ${entry.chest ? `Chest: ${entry.chest}" | ` : ''}
               ${entry.arms ? `Arms: ${entry.arms}" | ` : ''}
@@ -322,7 +356,7 @@ function loadProgressData() {
           </div>
           <div>
             <div class="progress-item-weight">${entry.weight} lbs</div>
-            <div style="font-size: 0.85rem; color: #ff6b35; text-align: right;">${changeEmoji} ${weightChange} lbs</div>
+            <div style="font-size: 0.85rem; color: var(--primary-color); text-align: right;">${changeEmoji} ${weightChange} lbs</div>
           </div>
         </div>
       `;
