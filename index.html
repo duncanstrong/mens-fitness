@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitAdvisor - Your Personal Fitness Coach</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <h1 class="logo">💪 FitAdvisor</h1>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#assessment">Assessment</a></li>
+                    <li><a href="#workouts">Workouts</a></li>
+                    <li><a href="#nutrition">Nutrition</a></li>
+                    <li><a href="#progress">Progress</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Transform Your Body, Elevate Your Life</h2>
+                <p>Get personalized fitness advice tailored to your goals and experience level</p>
+                <button class="cta-button" onclick="document.getElementById('assessment').scrollIntoView({behavior: 'smooth'})">Start Your Journey</button>
+            </div>
+        </section>
+
+        <!-- Assessment Section -->
+        <section id="assessment" class="assessment">
+            <h2>Your Fitness Profile</h2>
+            <form id="assessmentForm" class="form-grid">
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" min="18" max="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">Experience Level</label>
+                    <select id="experience" required>
+                        <option value="">Select...</option>
+                        <option value="beginner">Beginner (0-6 months)</option>
+                        <option value="intermediate">Intermediate (6-24 months)</option>
+                        <option value="advanced">Advanced (2+ years)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="goal">Primary Goal</label>
+                    <select id="goal" required>
+                        <option value="">Select...</option>
+                        <option value="muscle">Build Muscle</option>
+                        <option value="fat_loss">Lose Fat</option>
+                        <option value="strength">Increase Strength</option>
+                        <option value="endurance">Build Endurance</option>
+                        <option value="overall">Overall Fitness</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="frequency">Days Per Week Available</label>
+                    <select id="frequency" required>
+                        <option value="">Select...</option>
+                        <option value="2">2 days</option>
+                        <option value="3">3 days</option>
+                        <option value="4">4 days</option>
+                        <option value="5">5 days</option>
+                        <option value="6">6 days</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="equipment">Available Equipment</label>
+                    <select id="equipment" required>
+                        <option value="">Select...</option>
+                        <option value="full_gym">Full Gym Access</option>
+                        <option value="home_weights">Home Weights</option>
+                        <option value="minimal">Minimal/Bodyweight</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="injuries">Current Injuries/Limitations</label>
+                    <textarea id="injuries" placeholder="None, or describe..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">Get My Plan</button>
+            </form>
+
+            <div id="assessmentResults" class="results hidden"></div>
+        </section>
+
+        <!-- Workouts Section -->
+        <section id="workouts" class="workouts">
+            <h2>Workout Plans</h2>
+            <div class="workouts-grid" id="workoutsContainer">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Nutrition Section -->
+        <section id="nutrition" class="nutrition">
+            <h2>Nutrition Guidance</h2>
+            <div class="nutrition-content">
+                <div class="card">
+                    <h3>Macronutrient Basics</h3>
+                    <div id="macroCalculator" class="macro-section">
+                        <div class="form-group">
+                            <label for="bodyweight">Body Weight (lbs)</label>
+                            <input type="number" id="bodyweight" min="100" max="400" value="180">
+                        </div>
+                        <div class="form-group">
+                            <label for="goalType">Goal</label>
+                            <select id="goalType" onchange="calculateMacros()">
+                                <option value="muscle">Build Muscle</option>
+                                <option value="fat_loss">Lose Fat</option>
+                                <option value="maintenance">Maintenance</option>
+                            </select>
+                        </div>
+                        <button onclick="calculateMacros()" class="submit-button">Calculate Macros</button>
+                    </div>
+                    <div id="macroResults" class="macro-results"></div>
+                </div>
+
+                <div class="card">
+                    <h3>Nutrition Tips</h3>
+                    <ul class="tips-list">
+                        <li><strong>Protein:</strong> 0.8-1g per lb of body weight for muscle building</li>
+                        <li><strong>Hydration:</strong> Drink at least 3-4 liters of water daily</li>
+                        <li><strong>Meal Timing:</strong> Eat a balanced meal 2-3 hours before training</li>
+                        <li><strong>Post-Workout:</strong> Consume protein and carbs within 1-2 hours after training</li>
+                        <li><strong>Consistency:</strong> Track your food for 2-4 weeks to understand your intake</li>
+                        <li><strong>Vegetables:</strong> Aim for 2-3 cups daily for micronutrients</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Tracking Section -->
+        <section id="progress" class="progress">
+            <h2>Track Your Progress</h2>
+            <div class="progress-content">
+                <div class="card">
+                    <h3>Add Measurement</h3>
+                    <form id="progressForm" class="form-grid">
+                        <div class="form-group">
+                            <label for="progressDate">Date</label>
+                            <input type="date" id="progressDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight (lbs)</label>
+                            <input type="number" id="weight" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="waist">Waist (inches)</label>
+                            <input type="number" id="waist" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="chest">Chest (inches)</label>
+                            <input type="number" id="chest" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="arms">Arms (inches)</label>
+                            <input type="number" id="arms" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="legs">Legs (inches)</label>
+                            <input type="number" id="legs" step="0.1">
+                        </div>
+                        <button type="submit" class="submit-button">Log Measurements</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>Your Progress</h3>
+                    <div id="progressChart" class="chart"></div>
+                    <div id="progressList" class="progress-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 FitAdvisor. Built with dedication to your fitness journey.</p>
+            <p>Disclaimer: This app provides general fitness advice. Consult a healthcare provider before starting any new exercise program.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
